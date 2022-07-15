@@ -15,25 +15,35 @@ DUMP1090_URL = 'http://127.0.0.1/dump1090-fa/data/aircraft.json'
 UNKNOWN = 'Unknown'
 LATITUDE = 'lat'
 LONGTITUDE = 'lon'
-BUZZER_PIN = 17
+
+
+
+
+# MAIN USER CONFIG
+
+
 # seconds between each check
 INTERVAL_SECONDS = 3
+
 # set this to false if you don't want a long beep on initial gps lock
 initialGPSLockBeep=True 
+
 # I keep this value large so I know the app is running since it will always beep once.
 # you can set the value lower to have a quieter system and a 3rd perimeter
 OUTER_PERIMETER_ALARM_MILES = 100 
+
 # middle perimeter trigger sets of 2 beeps
 MIDDLE_PERIMETER_ALARM_MILES = 5
+
 # inner perimeter trigger sets of 3 beeps
 INNER_PERIMETER_ALARM_MILES = 2
+
 # upper limit of altitude at which you want to monitor aircraft
 ALTITUDE_ALARM_FEET = 1000
-running = True
-gpsd = gps(mode=WATCH_ENABLE | WATCH_NEWSTYLE)
-buzzer = Buzzer(BUZZER_PIN)
-lastKnownLat=UNKNOWN
-lastKnownLon=UNKNOWN
+
+#which pin the positive of the buzzer is connected to
+BUZZER_PIN = 17
+
 # the number of iterations we should try to reuse the last known position 
 # set this to -1 if you plan on relocating the unit to a location with poor GPS 
 # reception once initial position is established and you don't plan on moving around
@@ -41,6 +51,17 @@ lastKnownLon=UNKNOWN
 LAST_KNOWN_POSITION_REUSE_TIMES = 3
 lastKnownPosReuse=0
 failedGPSTries=0
+
+
+#END OF MAIN USER CONFIG
+
+
+running = True
+gpsd = gps(mode=WATCH_ENABLE | WATCH_NEWSTYLE)
+buzzer = Buzzer(BUZZER_PIN)
+lastKnownLat=UNKNOWN
+lastKnownLon=UNKNOWN
+
 
 def getPositionData(gps):
     nx = gpsd.next()
