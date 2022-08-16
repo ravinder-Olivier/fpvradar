@@ -28,7 +28,7 @@ INTERVAL_SECONDS = 3
 # set this to false if you don't want a long beep on initial gps lock
 initialGPSLockBeep=True 
 
-# I keep this value large so I know the app is running since it will always beep once.
+# Value is by default kept large so it is easier to know the app is running since it will always beep once 
 # you can set the value lower to have a quieter system and a 3rd perimeter
 OUTER_PERIMETER_ALARM_MILES = 100 
 
@@ -77,7 +77,7 @@ def getPositionData(gps):
         #print "Your position: lon = " + str(longitude) + ", lat = " + str(latitude)
         return (lastKnownLat, lastKnownLon)
     else:
-        print "NON TPV gps class encountered: "+nx['class']
+        print("NON TPV gps class encountered: "+nx['class'])
         if LAST_KNOWN_POSITION_REUSE_TIMES < 0:
     	    return (lastKnownLat, lastKnownLon)
         elif lastKnownPosReuse < LAST_KNOWN_POSITION_REUSE_TIMES:
@@ -96,13 +96,13 @@ def checkRadar():
     global failedGPSTries
     global gpsd
     homecoords = getPositionData(gpsd)
-    print homecoords
+    print(homecoords)
     if (homecoords[0] == UNKNOWN) or (homecoords[1] == UNKNOWN):
         #print "Cannot determine GPS position yet...try #"+str(failedGPSTries)
         #sleep(1)
         failedGPSTries += 1
         if failedGPSTries > 10:
-            print "Too many failed GPS tries, initializing new GPS object..."
+            print("Too many failed GPS tries, initializing new GPS object...")
             failedGPSTries = 0
             gpsd = gps(mode=WATCH_ENABLE | WATCH_NEWSTYLE)
         return
@@ -115,6 +115,7 @@ def checkRadar():
     try:
         airplanes = r.json()
     except:
+        # Enable for print error when exception occurs
         #print 'Error while getting airplane data'
         return
     outerAlarmTriggered = False
@@ -128,13 +129,13 @@ def checkRadar():
             if altitude < ALTITUDE_ALARM_FEET:
                 if distanceToPlane < INNER_PERIMETER_ALARM_MILES:
                     innerAlarmTriggered = True
-                    print 'Inner alarm triggered by '+airplane['flight']+' at '+str(datetime.now())+' with distance '+str(distanceToPlane)
+                    print('Inner alarm triggered by '+airplane['flight']+' at '+str(datetime.now())+' with distance '+str(distanceToPlane))
                 elif distanceToPlane < MIDDLE_PERIMETER_ALARM_MILES:
                     middleAlarmTriggered = True
-                    print 'Middle alarm triggered by '+airplane['flight']+' at ' +str(datetime.now())+' with distance '+str(distanceToPlane)
+                    print('Middle alarm triggered by '+airplane['flight']+' at ' +str(datetime.now())+' with distance '+str(distanceToPlane))
                 elif distanceToPlane < OUTER_PERIMETER_ALARM_MILES:
                     outerAlarmTriggered = True
-                    print 'Outer alarm triggered by '+airplane['flight']+' at ' +str(datetime.now())+' with distance '+str(distanceToPlane)
+                    print('Outer alarm triggered by '+airplane['flight']+' at ' +str(datetime.now())+' with distance '+str(distanceToPlane))
         except KeyError:
             pass
     if innerAlarmTriggered:
@@ -149,7 +150,7 @@ def checkRadar():
 
 
 try:
-    print "Application started!"
+    print("Application started!")
     while running:
         checkRadar()
         sys.stdout.flush()
@@ -161,10 +162,10 @@ except (ValueError):
 
 except (KeyboardInterrupt):
     running = False
-    print "Applications closed!"
+    print("Applications closed!")
 
 except:
-    print "Caught generic exception - continuing"
+    print("Caught generic exception - continuing")
     sys.stdout.flush()
     pass
 
