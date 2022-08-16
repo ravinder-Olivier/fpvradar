@@ -74,7 +74,8 @@ def getPositionData(gps):
         lastKnownLat = getattr(nx, LATITUDE, UNKNOWN)
         lastKnownLon = getattr(nx, LONGTITUDE, UNKNOWN)
         lastKnownPosReuse=0 #reset counter since we refreshed coords
-        #print "Your position: lon = " + str(longitude) + ", lat = " + str(latitude)
+        #Enable next line if you want updated location to be printed
+        #print("Your position: lon = " + str(longitude) + ", lat = " + str(latitude))
         return (lastKnownLat, lastKnownLon)
     else:
         print("NON TPV gps class encountered: "+nx['class'])
@@ -98,7 +99,9 @@ def checkRadar():
     homecoords = getPositionData(gpsd)
     print(homecoords)
     if (homecoords[0] == UNKNOWN) or (homecoords[1] == UNKNOWN):
-        #print "Cannot determine GPS position yet...try #"+str(failedGPSTries)
+        #Enable next line if you want GPS position fails to be printed
+        #print("Cannot determine GPS position yet...try #"+str(failedGPSTries))
+        #Enable lower line if you want device to sleep after fail
         #sleep(1)
         failedGPSTries += 1
         if failedGPSTries > 10:
@@ -115,8 +118,8 @@ def checkRadar():
     try:
         airplanes = r.json()
     except:
-        # Enable for print error when exception occurs
-        #print 'Error while getting airplane data'
+        # Enable for print error when exception/error occurs
+        #print('Error while getting airplane data')
         return
     outerAlarmTriggered = False
     middleAlarmTriggered = False
