@@ -41,7 +41,7 @@ INNER_PERIMETER_ALARM_MILES = 2
 # upper limit of altitude at which you want to monitor aircraft
 ALTITUDE_ALARM_FEET = 1000
 
-#which pin the positive of the buzzer is connected to
+#which pin the positive of the buzzer is connected to (negative can go to any negative)
 BUZZER_PIN = 17
 
 # the number of iterations we should try to reuse the last known position 
